@@ -51,11 +51,4 @@ Six machine learning models were trained and evaluated using the following metri
 Among all the models tested, **XGBoost** performed the best in terms of AUC, F1 Score, and MCC, making it the most suitable model for predicting term deposit subscriptions in this project. Ensemble methods (Random Forest and XGBoost) clearly outperformed single models, especially on this imbalanced dataset.
 
 **Deployment information**  
-Live Streamlit App: https://[your-app-name].streamlit.app  
-(Replace with your actual deployed link after successful deployment on Streamlit Community Cloud)
-
-**Repository contents**  
-- `app.py` – Streamlit application  
-- `requirements.txt` – required Python packages  
-- `model/` – saved trained models (.pkl files)  
-- `model_training.ipynb` – training and evaluation notebook (executed on BITS Virtual Lab)
+Live Streamlit App: (https://bits-ml-assignment-2-yash-patil.streamlit.app/) 
