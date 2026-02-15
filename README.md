@@ -1,60 +1,54 @@
-# Machine Learning Assignment 2  
-M.Tech (AIML/DSE) – Work Integrated Learning Programmes Division
+# Bank Marketing Subscription Prediction using Machine Learning
 
-## a. Problem statement
+## a. Problem Statement
+The objective of this project is to build and evaluate multiple machine learning models to classify whether a client will **subscribe to a term deposit** (yes/no) using the Bank Marketing dataset. The goal is to compare model performance using different evaluation metrics and identify the best performing model.
 
-The objective of this assignment is to implement and compare six classification algorithms on a selected public dataset, evaluate their performance using six standard metrics (Accuracy, AUC, Precision, Recall, F1 Score, and Matthews Correlation Coefficient), and deploy an interactive Streamlit web application.  
+---
 
-The application allows users to:
-- Upload test data in CSV format
-- Select one of the trained models via dropdown
-- View predictions
-- See evaluation metrics (when true labels are provided)
-- Display confusion matrix and classification report
+## b. Dataset Description
+The dataset used in this project is the **Bank Marketing Dataset** (bank-full.csv) obtained from **UCI Machine Learning Repository**.
 
-This demonstrates a complete end-to-end machine learning workflow: data preparation, model training, evaluation, web interface creation, and cloud deployment.
+- Total Samples: 45,211
+- Features: 16 input features (7 numerical + 9 categorical)
+- Target Variable:
+  - 0 → No
+  - 1 → Yes
+- Highly imbalanced (~88.3% No, ~11.7% Yes)
+- No missing values present
+- Preprocessing: One-hot encoding for categorical features, StandardScaler for numerical features, stratified train-test split (75/25)
 
-## b. Dataset description
+---
 
-**Dataset name:** Bank Marketing (full dataset – bank-full.csv)  
-**Source:** UCI Machine Learning Repository  
-**Link:** https://archive.ics.uci.edu/dataset/222/bank+marketing  
-**Task:** Binary classification – predict whether a client will subscribe a term deposit (target: y = "yes" / "no")  
-**Number of instances:** 45,211  
-**Number of features:** 16 input features (7 numerical + 9 categorical)  
-**Target variable:** y (highly imbalanced: ~88.3% "no", ~11.7% "yes")  
-**Preprocessing applied:**  
-- Categorical variables → one-hot encoded (drop_first=True)  
-- Numerical variables → standardized using StandardScaler  
-- Train/test split: 75/25, stratified to preserve class distribution  
+## c. Models Used
+Six machine learning models were trained and evaluated using the following metrics:  
+**Accuracy, AUC, Precision, Recall, F1 Score, MCC**
 
-This dataset meets the assignment requirements (>> 500 instances, >> 12 features) and is suitable for comparing linear, tree-based, distance-based, probabilistic, and ensemble methods.
+### Model Comparison Table
+| ML Model Name            | Accuracy | AUC    | Precision | Recall | F1     | MCC    |
+|--------------------------|----------|--------|-----------|--------|--------|--------|
+| Logistic Regression      | 0.9016   | 0.9054 | 0.6474    | 0.3488 | 0.4533 | 0.4280 |
+| Decision Tree            | 0.8777   | 0.7135 | 0.4783    | 0.4991 | 0.4884 | 0.4191 |
+| kNN                      | 0.8961   | 0.8373 | 0.5931    | 0.3554 | 0.4444 | 0.4067 |
+| Naive Bayes              | 0.8639   | 0.8088 | 0.4282    | 0.4877 | 0.4560 | 0.3797 |
+| Random Forest (Ensemble) | 0.9045   | 0.9272 | 0.6554    | 0.3866 | 0.4863 | 0.4561 |
+| XGBoost (Ensemble)       | **0.9080** | **0.9291** | 0.6348    | **0.5028** | **0.5612** | **0.5149** |
 
-## c. Models used
+---
 
-The following six classification models were implemented and evaluated on the same dataset:
-
-| ML Model Name          | Accuracy | AUC    | Precision | Recall | F1     | MCC    |
-|------------------------|----------|--------|-----------|--------|--------|--------|
-| Logistic Regression    | 0.9016   | 0.9054 | 0.6474    | 0.3488 | 0.4533 | 0.4280 |
-| Decision Tree          | 0.8777   | 0.7135 | 0.4783    | 0.4991 | 0.4884 | 0.4191 |
-| kNN                    | 0.8961   | 0.8373 | 0.5931    | 0.3554 | 0.4444 | 0.4067 |
-| Naive Bayes            | 0.8639   | 0.8088 | 0.4282    | 0.4877 | 0.4560 | 0.3797 |
-| Random Forest (Ensemble) | 0.9045 | 0.9272 | 0.6554    | 0.3866 | 0.4863 | 0.4561 |
-| XGBoost (Ensemble)     | 0.9080   | 0.9291 | 0.6348    | 0.5028 | 0.5612 | 0.5149 |
-
-**Note:** All metrics were computed on the test set (25% hold-out). Values are rounded to 4 decimal places.
-
-### Observations about model performance
-
+## Observations about Model Performance
 | ML Model Name            | Observation about model performance                                                                 |
 |--------------------------|-----------------------------------------------------------------------------------------------------|
-| Logistic Regression      | Strong linear baseline with high accuracy and AUC. However, low recall due to class imbalance — tends to predict majority class ("no") more often. |
-| Decision Tree            | Shows signs of overfitting (lowest AUC). Balanced precision/recall trade-off but overall weaker generalization compared to ensembles. |
-| kNN                      | Reasonable accuracy, but suffers from high dimensionality after one-hot encoding → lower recall and MCC than tree-based ensembles. |
-| Naive Bayes              | Fast training and surprisingly decent recall despite strong independence assumption. Lowest precision — over-predicts positive class. |
-| Random Forest (Ensemble) | Very robust with high AUC and accuracy. Excellent precision but lower recall than XGBoost on this imbalanced problem. |
-| XGBoost (Ensemble)       | Best overall performance: highest AUC, F1 score, and MCC. Effectively handles class imbalance and complex feature interactions through gradient boosting. |
+| Logistic Regression      | Performs well as a simple linear baseline with high accuracy and AUC. Low recall due to class imbalance — tends to favor the majority class. |
+| Decision Tree            | Shows signs of overfitting with the lowest AUC. Balanced precision/recall but weaker generalization compared to ensemble methods. |
+| kNN                      | Reasonable accuracy but affected by high dimensionality after encoding. Moderate recall and MCC performance. |
+| Naive Bayes              | Fast and surprisingly good recall despite independence assumption. Lowest precision — tends to over-predict subscriptions. |
+| Random Forest (Ensemble) | Very robust with excellent precision and high AUC. Conservative recall but strong overall reliability. |
+| XGBoost (Ensemble)       | **Best performing model overall** with highest AUC, F1 score, and MCC. Excellent handling of imbalance and feature interactions. |
+
+---
+
+## Conclusion
+Among all the models tested, **XGBoost** performed the best in terms of AUC, F1 Score, and MCC, making it the most suitable model for predicting term deposit subscriptions in this project. Ensemble methods (Random Forest and XGBoost) clearly outperformed single models, especially on this imbalanced dataset.
 
 **Deployment information**  
 Live Streamlit App: https://[your-app-name].streamlit.app  
