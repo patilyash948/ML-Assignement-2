@@ -14,7 +14,7 @@ import seaborn as sns
 st.set_page_config(page_title="ML Assignment 2 – Bank Marketing", layout="wide")
 
 st.title("Bank Marketing Classification Demo")
-st.markdown("Upload test CSV → select model → see predictions & metrics (if 'y' column exists)")
+st.markdown("Upload test CSV → select model → see predictions & metrics")
 
 model_list = [
     "Logistic_Regression", "Decision_Tree", "kNN",
@@ -111,4 +111,5 @@ if uploaded is not None:
 
     except Exception as e:
         st.error("Error during processing")
+
         st.exception(e)
